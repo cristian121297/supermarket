@@ -17,7 +17,6 @@ public class Control  {
     private View objView;
     private AdministratorSQL objSQL;
     DefaultTableModel modelo = new DefaultTableModel();
-    //AdministratorSQL dao = new AdministratorSQL();
     
     //Se crea el constructor
     public Control (View objView, ModelUser objUser){
@@ -59,7 +58,16 @@ public class Control  {
         objUser.setId(Integer.parseInt(objView.txtid.getText()));
         String date =objView.optday.getSelectedItem()+"-"+objView.optmonth.getSelectedItem()+"-"+objView.optyear.getSelectedItem();
         objUser.setBirthday(date);
+        String cargo = objView.optCargo.getSelectedItem().toString();
+        objUser.setCargo(cargo);
+        
     }
+    
+    private void GetCombo()
+    {
+        objView.jComboBuscarCargo.getSelectedItem();
+    }
+    
     
     //Accion para el botonregistrar
     ActionListener ObjbtnRegister = new ActionListener (){
@@ -68,14 +76,16 @@ public class Control  {
             boolean confirm = objSQL.connectSQL();
             if(confirm){
                 establish_user();
-                objSQL.register(objUser.getName(),objUser.getBirthday(),objUser.getId());
+                objSQL.register(objUser.getName(),objUser.getBirthday(),objUser.getId(), objUser.getCargo(objView.optCargo.getSelectedItem()));
             }
         }   
     };  
+    
     //Accion para el consultar
     ActionListener ObjbtnConsult = new ActionListener (){
         @Override
         public void actionPerformed(ActionEvent e) {
+            limpiarTabla(objView.tbusers);
             boolean confirm = objSQL.connectSQL();
             if(confirm){
                 listar(objView.tbusers);
@@ -83,17 +93,31 @@ public class Control  {
                
         }   
     };   
-    //
+ 
+    public void limpiarTabla(JTable tbusers){
+        modelo = (DefaultTableModel) tbusers.getModel();
+        int filas = tbusers.getRowCount();
+        
+        int i = 0;
+        
+        while(filas > i){
+            modelo.removeRow(i);
+            i++;
+        }
+
+    }
+    
     public void listar(JTable tbusers) {
         centrarCeldas(tbusers);
         modelo = (DefaultTableModel) tbusers.getModel();
         tbusers.setModel(modelo);
-        List<ModelUser> lista = objSQL.consult();
-        Object[] objeto = new Object[3];
+        List<ModelUser> lista = objSQL.consult(objView.jComboBuscarCargo.getSelectedItem().toString());
+        Object[] objeto = new Object[4];
         for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getName();
             objeto[1] = lista.get(i).getBirthday();
             objeto[2] = lista.get(i).getId();
+            objeto[3] = lista.get(i).getCargo(objView.optCargo.getSelectedItem());
             modelo.addRow(objeto);
         }
         //medidas de la tabla
