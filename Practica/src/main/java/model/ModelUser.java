@@ -1,9 +1,6 @@
 package model;
-
 public class ModelUser {
-    
     // crear los atributos necesarios para nuestro codigo
-    
     private String name;
     private String birthday;
     private int id;
@@ -20,7 +17,7 @@ public class ModelUser {
         this.cargo = cargo;
     }
     /* insertar los metodos get (retornan el valor de la variable) 
-    y set  (no retornan nada=void) de todos los atributos*/  
+    y set  (no retornan nada = void) de todos los atributos*/  
     public String getName() {
         return name;
     }

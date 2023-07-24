@@ -1,4 +1,3 @@
-
 package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import view.View;
 import model.ModelUser;
 import model.AdministratorSQL;
+
+
 public class Control  {
     
     //Definimos los objetos
@@ -19,8 +20,7 @@ public class Control  {
     DefaultTableModel modelo = new DefaultTableModel();
     
     //Se crea el constructor
-    public Control (View objView, ModelUser objUser){
-        
+    public Control (View objView, ModelUser objUser){ 
         //relacionamos los objetos
         this.objView = objView;
         this.objUser= objUser;
@@ -30,12 +30,11 @@ public class Control  {
         objView.btnregister.addActionListener(ObjbtnRegister);
         objView.btnconsult.addActionListener(ObjbtnConsult);
         
-    }
+    } 
 
     public Control(View v) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
     //se muestra interfaz y se centra
     private void startView(){
         objView.setVisible(true);
@@ -52,23 +51,14 @@ public class Control  {
         }
     }
     //en esta linea se envian datos reales a la base de datos
-    
     private void establish_user(){
         objUser.setName(objView.txtname.getText());
         objUser.setId(Integer.parseInt(objView.txtid.getText()));
         String date =objView.optday.getSelectedItem()+"-"+objView.optmonth.getSelectedItem()+"-"+objView.optyear.getSelectedItem();
         objUser.setBirthday(date);
         String cargo = objView.optCargo.getSelectedItem().toString();
-        objUser.setCargo(cargo);
-        
-    }
-    
-    private void GetCombo()
-    {
-        objView.jComboBuscarCargo.getSelectedItem();
-    }
-    
-    
+        objUser.setCargo(cargo); 
+    }  
     //Accion para el botonregistrar
     ActionListener ObjbtnRegister = new ActionListener (){
         @Override
@@ -80,7 +70,6 @@ public class Control  {
             }
         }   
     };  
-    
     //Accion para el consultar
     ActionListener ObjbtnConsult = new ActionListener (){
         @Override
@@ -92,19 +81,12 @@ public class Control  {
             }
                
         }   
-    };   
- 
+    };
+    
+    // SE LIMPIA LA TABLA CADA VEZ QUE SE CONSULTA
     public void limpiarTabla(JTable tbusers){
-        modelo = (DefaultTableModel) tbusers.getModel();
-        int filas = tbusers.getRowCount();
-        
-        int i = 0;
-        
-        while(filas > i){
-            modelo.removeRow(i);
-            i++;
-        }
-
+      DefaultTableModel modelo = (DefaultTableModel) tbusers.getModel();
+        modelo.setRowCount(0);
     }
     
     public void listar(JTable tbusers) {

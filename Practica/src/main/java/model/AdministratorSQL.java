@@ -1,5 +1,4 @@
 package model;
-
 import java.util.List;
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -11,7 +10,7 @@ public class AdministratorSQL {
     //OBJETO DE LA CLASE CONECTION
     private Connection objConnection;
     private String user = "root";
-    private String passw = "Colombia23*";
+    private String passw = "1234";
     private String dataBase = "db_practicas1";
     private String url = "jdbc:mysql://localhost:3306";
     ModelUser p = new ModelUser();
@@ -31,9 +30,11 @@ public class AdministratorSQL {
     //se crea el metodo registrar
     public void register(String name, String date, int id, String cargo) {
         try {
-            String instruction = "INSERT INTO users (fullname, fecha, id, cargo) values ('" + name + "','" + date + "'," + id + ",'" + cargo + "')";
+            String instruction = "INSERT INTO users2 (fullname, fecha, id, cargo)"
+                    + " values ('" + name + "','" + date + "'," + id + ",'" + cargo + "')";
             objConnection.prepareStatement(instruction).execute();
             JOptionPane.showMessageDialog(null, "USUARIO REGISTRADO");
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "USUARIO FALLIDO" + ex);
         }
@@ -42,7 +43,7 @@ public class AdministratorSQL {
     //se crea el metodo consulta
     public List consult(String cargo) {
         List<ModelUser> datos = new ArrayList<>();
-        String instruction = "SELECT * FROM users WHERE cargo = '" + cargo + "' ";
+        String instruction = "SELECT * FROM users2 WHERE cargo = '" + cargo + "' ";
         try {
 
             Statement statement = objConnection.createStatement();

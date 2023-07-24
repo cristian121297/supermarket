@@ -1,8 +1,5 @@
-
 package com.mycompany.practica;
-
-// importtamos los elementos apra poder usarlo en esta clase
-
+// importtamos los elementos para poder usarlo en esta clase
 import view.View;
 import controller.Control;
 import model.ModelUser;
